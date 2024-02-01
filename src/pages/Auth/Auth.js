@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 import './Auth.css'
 import Logo from '../../img/logo.png'
+import { useDispatch, useSelector } from 'react-redux'
+import { logIn, signUp } from '../../actions/AuthAction'
 
 const Auth = () => {
 
     const [isSignUp, setIsSignUp] = useState(true)
     const [data, setData] = useState({ firstname: "", lastname: "", username: "", password: "", cpassword: "" })
     const [cpassword, setCPassword] = useState(true)
+
+    const dispatch = useDispatch()
+    const loading = useSelector((state) => state.authReducer.loading)
+    console.log(loading);
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
@@ -15,9 +21,13 @@ const Auth = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         if (isSignUp) {
-            if (data.password !== data.cpassword) {
+            if (data.password === data.cpassword) {
+                dispatch(signUp(data))
+            } else {
                 setCPassword(false)
             }
+        } else {
+            dispatch(logIn(data))
         }
     }
 
@@ -54,7 +64,9 @@ const Auth = () => {
                     <span style={{ display: cpassword ? "none" : "block", fontSize: "12px", color: "red", alignSelf: "center", }}>
                         *Password and Confirm Password is not same!
                     </span>
-                    <button className='button info-button' type='submit'>{isSignUp ? "Sign Up" : "Login"}</button>
+                    <button className='button info-button' type='submit' disabled={loading}>
+                        {loading ? "Loading..." : isSignUp ? "Sign Up" : "Login"}
+                    </button>
                     <div>
                         <span style={{ fontSize: "14px", cursor: "pointer" }} onClick={() => {
                             setIsSignUp((prev) => !prev);
