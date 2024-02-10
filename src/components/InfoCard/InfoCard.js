@@ -5,6 +5,7 @@ import ProfileModal from '../ProfileModal/ProfileModal'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import * as UserApi from '../../api/UserReq.js'
+import { logout } from '../../actions/AuthAction.js'
 
 const InfoCard = () => {
 
@@ -29,6 +30,10 @@ const InfoCard = () => {
         }
         fetchProfileUser();
     }, [user]);
+
+    const handleLogout = () => {
+        dispatch(logout())
+    }
 
     return (
         <div className='InfoCard'>
@@ -63,7 +68,7 @@ const InfoCard = () => {
                 </span>
                 <span>{profileUser.worksAt}</span>
             </div>
-            <button className='button logout-btn'>Logout</button>
+            <button className='button logout-btn' onClick={handleLogout}>Logout</button>
         </div>
     )
 }

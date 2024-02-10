@@ -8,6 +8,9 @@ const authReducer = (state = { authData: null, loading: false, error: false }, a
             return { ...state, authData: action.data, loading: false, error: false }
         case "AUTH_FAIL":
             return { ...state, loading: false, error: true }
+        case "Logout":
+            localStorage.clear()
+            return { ...state, authData: null, loading: false, error: false }
         default:
             return state
     }

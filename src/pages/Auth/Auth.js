@@ -6,7 +6,7 @@ import { logIn, signUp } from '../../actions/AuthAction'
 
 const Auth = () => {
 
-    const [isSignUp, setIsSignUp] = useState(true)
+    const [isSignUp, setIsSignUp] = useState(false)
     const [data, setData] = useState({ firstname: "", lastname: "", username: "", password: "", cpassword: "" })
     const [cpassword, setCPassword] = useState(true)
 
