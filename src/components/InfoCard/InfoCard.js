@@ -47,20 +47,20 @@ const InfoCard = () => {
                 ) : ("")}
                 <div>
                     <UilPen width='2rem' height='1.2rem' onClick={() => setOpenModal(true)} />
-                    <ProfileModal openModal={openModal} setOpenModal={setOpenModal} />
+                    <ProfileModal openModal={openModal} setOpenModal={setOpenModal} data={user} />
                 </div>
             </div>
             <div className="info">
                 <span>
                     <b>Status </b>
                 </span>
-                <span>{profileUser.relationship}</span>
+                <span>{profileUser.relationshipStatus}</span>
             </div>
             <div className="info">
                 <span>
                     <b>Lives in </b>
                 </span>
-                <span>{profileUser.livesin}</span>
+                <span>{profileUser.livesIn}, {profileUser.country}</span>
             </div>
             <div className="info">
                 <span>
