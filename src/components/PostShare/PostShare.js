@@ -33,6 +33,7 @@ const PostShare = () => {
         e.preventDefault()
         const newPost = {
             userId: user._id,
+            name: `${user.firstname} ${user.lastname}`,
             desc: desc.current.value
         }
         if (image) {
