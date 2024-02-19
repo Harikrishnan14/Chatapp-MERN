@@ -4,6 +4,7 @@
 /node_modules
 Backend/node_modules
 Backend/public
+Socket/node_modules
 /.pnp
 .pnp.js
 
