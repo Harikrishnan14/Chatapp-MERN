@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './ChatBox.css'
 import { getUser } from '../../api/UserReq'
-import { getMessages } from '../../api/MessageReq'
+import { addMessage, getMessages } from '../../api/MessageReq'
 import { format } from 'timeago.js';
 import InputEmoji from 'react-input-emoji'
 
-const ChatBox = ({ chat, currentUser }) => {
+const ChatBox = ({ chat, currentUser, setSendMessage, recieveMessage }) => {
 
     const [userData, setUserData] = useState(null)
     const [messages, setMessages] = useState([])
@@ -45,6 +45,35 @@ const ChatBox = ({ chat, currentUser }) => {
         setNewMessage(newMessage)
     }
 
+    const handleSend = async (e) => {
+        e.preventDefault()
+        const message = {
+            senderId: currentUser,
+            text: newMessage,
+            chatId: chat._id
+        }
+
+        //Sending to DB
+        try {
+            const { data } = await addMessage(message)
+            setMessages([...messages, data])
+            setNewMessage("")
+        } catch (error) {
+
+            console.log(error);
+        }
+
+        //Sending to socket server
+        const recieverId = chat.members.find((id) => id !== currentUser)
+        setSendMessage({ ...message, recieverId })
+    }
+
+    useEffect(() => {
+        if (recieveMessage !== null && recieveMessage.chatId === chat._id) {
+            setMessages([...messages, recieveMessage])
+        }
+    }, [recieveMessage])
+
     return (
         <>
             <div className="chatbox-container">
@@ -77,7 +106,7 @@ const ChatBox = ({ chat, currentUser }) => {
                         <div className="chat-sender">
                             <div>+</div>
                             <InputEmoji value={newMessage} onChange={handleChange} />
-                            <div className="send-button button">Send</div>
+                            <div className="send-button button" onClick={handleSend}>Send</div>
                         </div>
                     </>
                 ) : (
