@@ -93,13 +93,11 @@ const ChatBox = ({ chat, currentUser, setSendMessage, recieveMessage }) => {
 
                         <div className="chat-body">
                             {messages.map((msg) => (
-                                <>
-                                    <div className={msg.senderId === currentUser ? "message own" : "message"}>
-                                        <span>{msg.text}</span>
-                                        <span>{format(msg.createdAt)}</span>
+                                <div className={msg.senderId === currentUser ? "message own" : "message"} key={msg._id}>
+                                    <span>{msg.text}</span>
+                                    <span>{format(msg.createdAt)}</span>
 
-                                    </div>
-                                </>
+                                </div>
                             ))}
                         </div>
 
