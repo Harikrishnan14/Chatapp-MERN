@@ -12,7 +12,6 @@ const Auth = () => {
 
     const dispatch = useDispatch()
     const loading = useSelector((state) => state.authReducer.loading)
-    console.log(loading);
 
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
